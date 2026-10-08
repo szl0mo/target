@@ -1,6 +1,6 @@
 const leDados = require('./utils')
 
-const caminhoDados = './dados/dados1.json'
+const CAMINHO_DADOS = './dados/dados1.json'
 
 function calculaComissao (valor) {
 	if (valor < 100) return 0
@@ -19,7 +19,7 @@ function imprimeComissoes (comissoes) {
 }
 
 function main () {
-	const dados = leDados(caminhoDados)
+	const dados = leDados(CAMINHO_DADOS)
 	const vendas = dados.vendas
 	const vendedores = [...new Set(vendas.map(item => item.vendedor))] 
 
