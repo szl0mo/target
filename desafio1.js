@@ -1,5 +1,7 @@
 const leDados = require('./utils')
 
+const caminhoDados = './dados/dados1.json'
+
 function calculaComissao (valor) {
 	if (valor < 100) return 0
 	if (valor < 500) return valor * 0.01
@@ -16,21 +18,24 @@ function imprimeComissoes (comissoes) {
 	}
 }
 
-const dados = leDados('./dados1.json')
-const vendas = dados.vendas
-const vendedores = [...new Set(vendas.map(item => item.vendedor))] 
+function main () {
+	const dados = leDados(caminhoDados)
+	const vendas = dados.vendas
+	const vendedores = [...new Set(vendas.map(item => item.vendedor))] 
 
-const comissoes = {}
-for (const vendedor of vendedores) {
-	const vendasVendedor = filtraVendasVendedor(vendas, vendedor)
-	console.log(vendasVendedor)
-	const totalComissao = vendasVendedor.reduce(
-		(total, venda) => total + calculaComissao(venda.valor),
-		0
-	)
+	const comissoes = {}
+	for (const vendedor of vendedores) {
+		const vendasVendedor = filtraVendasVendedor(vendas, vendedor)
+		const totalComissao = vendasVendedor.reduce(
+			(total, venda) => total + calculaComissao(venda.valor),
+			0
+		)
 
-	comissoes[vendedor] = totalComissao
+		comissoes[vendedor] = totalComissao
+	}
+
+	console.log('Total de comissão de cada vendedor:\n')
+	imprimeComissoes(comissoes)
 }
 
-console.log('Total de comissão de cada vendedor:\n')
-imprimeComissoes(comissoes)
+main()
